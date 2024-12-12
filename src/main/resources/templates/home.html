@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{template-three}">
+
+<head>
+  <title>Send Gateway Request</title>
+</head>
+
+<body>
+
+  <div layout:fragment="page-content-fragment" class="flex-grow-1 p-3">
+    <h2>Web SDK Simulator</h2>
+    <hr class="my-4">
+    <form th:action="@{/home}" method="post" class="row g-3">
+      <div class="col-md-6">
+        <label for="consumerRefNumber" class="form-label">Loan Number:</label>
+        <input type="text" id="consumerRefNumber" name="consumerRefNumber" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="referenceNumber" class="form-label">Request Number:</label>
+        <input type="text" id="referenceNumber" name="referenceNumber" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="amount" class="form-label">Amount:</label>
+        <input type="number" id="amount" name="amount" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="frqcy" class="form-label">Frequency:</label>
+        <select id="frqcy" name="frqcy" class="form-control" required>
+          <option th:each="entry : ${frqcyMap}" th:value="${entry.key}" th:text="${entry.value}"></option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="firstCollectionDate" class="form-label">First Collection Date:</label>
+        <input type="date" id="firstCollectionDate" name="firstCollectionDate" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="finalCollectionDate" class="form-label">Final Collection Date:</label>
+        <input type="date" id="finalCollectionDate" name="finalCollectionDate" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="dbtrNm" class="form-label">Name:</label>
+        <input type="text" id="dbtrNm" name="dbtrNm" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="mobile" class="form-label">Mobile:</label>
+        <input type="text" id="mobile" name="mobile" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="dbtrAccNo" class="form-label">Account Number:</label>
+        <input type="text" id="dbtrAccNo" name="dbtrAccNo" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="dbtrAccTp" class="form-label">Account Type:</label>
+        <select id="dbtrAccTp" name="dbtrAccTp" class="form-control" required>
+          <option th:each="entry : ${accountTypeMap}" th:value="${entry.key}" th:text="${entry.value}"></option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="bnkId" class="form-label">Bank:</label>
+        <input type="text" id="bnkId" name="bnkId" class="form-control" required>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+  </div>
+
+</body>
+
+</html>

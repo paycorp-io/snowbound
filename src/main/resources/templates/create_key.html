@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{template-three}">
+
+<head>
+  <title>Smart Mandate Utilities</title>
+</head>
+
+<body>
+
+  <div layout:fragment="page-content-fragment" class="flex-grow-1 p-3">
+      <h2>Generate Random AES Key</h2>
+      <hr class="my-4">
+      <p>Random AES Key: <strong th:text="${key}"></strong></p>
+      <p><a th:href="@{/createKey}">Refresh</a> to generate a new key</p>
+    </div>
+  </div>
+
+</body>
+
+</html>

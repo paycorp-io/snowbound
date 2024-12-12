@@ -1,0 +1,14 @@
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Authorize Mandate</title>
+</head>
+<body>
+<!-- change the action url to point to SIBL hog -->
+<form id="form" name="form" method="POST" action="https://sandbox-hog.paycorp.io/gateway/enc">
+   <input type="hidden" id="clientId" name="clientId" th:value="${clientId}">
+   <input type="hidden" id="encData" name="encData" th:value="${encData}">
+</form>
+</body>
+<script type="text/javascript" th:src="@{/js/auto_form_post.js}" ></script>
+</html>
