@@ -165,13 +165,13 @@
                 <li class="mb-1">
                     <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                         data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                        Home
+                        Utilities
                     </button>
                     <div class="collapse show" id="home-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a th:href="@{/home}"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Gateway
-                                    Request</a>
+                            <li><a th:href="@{/createKey}"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Generate
+                                    API/Gateway Key</a>
                             </li>
                             <li><a href="#"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded">Updates</a>
@@ -185,7 +185,7 @@
                 <li class="mb-1">
                     <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                         data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                        Dashboard
+                        Gateway
                     </button>
                     <div class="collapse" id="dashboard-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -207,7 +207,7 @@
                 <li class="mb-1">
                     <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                         data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                        Orders
+                        API
                     </button>
                     <div class="collapse" id="orders-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -259,6 +259,7 @@
 
     <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/sidebars.js}"></script>
+    <th:block layout:fragment="page-scripts-fragment"></th:block>
 </body>
 
 </html>

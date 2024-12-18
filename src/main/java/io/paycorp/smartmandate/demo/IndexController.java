@@ -33,7 +33,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "sign-in";
     }
 
     @GetMapping("/home")
@@ -105,3 +105,4 @@ public class IndexController {
         return "redirect_to_gateway";
     }
 }
+// { "accNum": "12344555" } -> encrypt and send
