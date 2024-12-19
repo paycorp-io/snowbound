@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{template-three}">
+
+<head>
+  <title>Smart Mandate Utilities</title>
+</head>
+
+<body>
+
+  <div layout:fragment="page-content-fragment" class="flex-grow-1 p-3">
+    <h2>Query Mandate by Reference Number</h2>
+    <hr class="my-4">
+    <form th:action="@{/queryMandate}" method="post" class="row g-3">
+      <div class="col-md-6">
+        <label for="referenceNumber" class="form-label">Mandate Reference Number:</label>
+        <input type="text" id="referenceNumber" name="referenceNumber" class="form-control"
+          th:value="${referenceNumber}" required>
+      </div>
+      <div class="col-md-6">
+        <label for="encryptionKey" class="form-label">Encryption Key:</label>
+        <input type="text" id="encryptionKey" name="encryptionKey" class="form-control" th:value="${encryptionKey}"
+          required>
+      </div>
+      <div class="col-md-6">
+        <label for="url" class="form-label">Query Mandate URL:</label>
+        <input type="text" id="url" name="url" class="form-control" th:value="${url}" required>
+      </div>
+      <div class="col-md-6">
+        <label for="apiKey" class="form-label">API Key:</label>
+        <input type="text" id="apiKey" name="apiKey" class="form-control" th:value="${apiKey}" required>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+    <p>Encrypted Value: <strong id="encData" th:text="${encData}"></strong></p>
+    <p>URL Encoded Value: <strong id="urlEnc" th:text="${urlEnc}"></strong></p>
+    <p>Encrypted Response: <strong id="encResponse" th:text="${encResponse}"></strong></p>
+    <p>Decrypted Response: <strong id="decResponse" th:text="${decResponse}"></strong></p>
+  </div>
+  <th:block layout:fragment="page-scripts-fragment">
+    <script type="text/javascript" th:src="@{/js/query_mandate.js}"></script>
+  </th:block>
+</body>
+
+</html>

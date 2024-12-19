@@ -1,6 +1,7 @@
 package io.paycorp.smartmandate.demo;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.Base64;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import io.paycorp.smartmandate.client.ApiClient;
 import io.paycorp.smartmandate.client.Client;
 import io.paycorp.smartmandate.client.domain.Mandate;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +46,51 @@ public class IndexController {
         model.addAttribute("accountTypeMap", accountTypeMap);
         model.addAttribute("frqcyMap", frqcyMap);
         return "home";
+    }
+
+    @GetMapping("/queryMandate")
+    public String queryMandate(Model model) {
+        return "query_mandate";
+    }
+
+    @PostMapping("/queryMandate")
+    public String postQueryMandate(@RequestParam String referenceNumber, @RequestParam String encryptionKey,
+            @RequestParam String url, @RequestParam String apiKey, Model model) throws Exception {
+        log.info("Reference Number: " + referenceNumber);
+        log.info("Encryption Key: " + encryptionKey);
+        log.info("URL: " + url);
+        log.info("API Key: " + apiKey);
+
+        model.addAttribute("referenceNumber", referenceNumber);
+        model.addAttribute("encryptionKey", encryptionKey);
+        model.addAttribute("url", url);
+        model.addAttribute("apiKey", apiKey);
+
+        var optEncData = HelperUtility.encrypt(encryptionKey, referenceNumber);
+        if (optEncData.isPresent()) {
+            var urlEnc = Base64.getUrlEncoder().encodeToString(optEncData.get().getBytes(StandardCharsets.UTF_8));
+            model.addAttribute("encData", optEncData.get());
+            model.addAttribute("urlEnc", urlEnc);
+            var decoded = Base64.getUrlDecoder().decode(urlEnc);
+            log.info("Decoded: " + new String(decoded, StandardCharsets.UTF_8));
+            var decrypted = HelperUtility.decrypt(encryptionKey, new String(decoded, StandardCharsets.UTF_8));
+            log.info("Decrypted: " + decrypted.orElse("Failed to decrypt"));
+        } else {
+            model.addAttribute("encData", "Failed to encrypt data");
+            model.addAttribute("urlEnc", "Failed to encode data");
+        }
+
+        ApiClient apiClient = new ApiClient(url, apiKey, encryptionKey);
+        var apiResponse = apiClient.findBySourceReference(referenceNumber);
+        if(!apiResponse.isSuccess()) {
+            model.addAttribute("encResponse", apiResponse.toString());
+            model.addAttribute("decResponse", apiResponse.toString());
+        } else {
+            model.addAttribute("encResponse", apiResponse.message());
+            model.addAttribute("decResponse", apiResponse.message());
+        } 
+
+        return "query_mandate";
     }
 
     @GetMapping("/createKey")
