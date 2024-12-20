@@ -68,10 +68,10 @@ public class IndexController {
 
         ApiClient apiClient = new ApiClient(url, apiKey, encryptionKey);
         var apiResponse = apiClient.findBySourceReference(referenceNumber);
-        if(!apiResponse.isSuccess()) {
-            model.addAttribute("response", apiResponse.toString());
-        } else {
+        if(apiResponse.isSuccess()) {
             model.addAttribute("response", apiResponse.message());
+        } else {
+            model.addAttribute("response", apiResponse.toString());
         } 
 
         return "query_mandate";
