@@ -66,28 +66,12 @@ public class IndexController {
         model.addAttribute("url", url);
         model.addAttribute("apiKey", apiKey);
 
-        var optEncData = HelperUtility.encrypt(encryptionKey, referenceNumber);
-        if (optEncData.isPresent()) {
-            var urlEnc = Base64.getUrlEncoder().encodeToString(optEncData.get().getBytes(StandardCharsets.UTF_8));
-            model.addAttribute("encData", optEncData.get());
-            model.addAttribute("urlEnc", urlEnc);
-            var decoded = Base64.getUrlDecoder().decode(urlEnc);
-            log.info("Decoded: " + new String(decoded, StandardCharsets.UTF_8));
-            var decrypted = HelperUtility.decrypt(encryptionKey, new String(decoded, StandardCharsets.UTF_8));
-            log.info("Decrypted: " + decrypted.orElse("Failed to decrypt"));
-        } else {
-            model.addAttribute("encData", "Failed to encrypt data");
-            model.addAttribute("urlEnc", "Failed to encode data");
-        }
-
         ApiClient apiClient = new ApiClient(url, apiKey, encryptionKey);
         var apiResponse = apiClient.findBySourceReference(referenceNumber);
         if(!apiResponse.isSuccess()) {
-            model.addAttribute("encResponse", apiResponse.toString());
-            model.addAttribute("decResponse", apiResponse.toString());
+            model.addAttribute("response", apiResponse.toString());
         } else {
-            model.addAttribute("encResponse", apiResponse.message());
-            model.addAttribute("decResponse", apiResponse.message());
+            model.addAttribute("response", apiResponse.message());
         } 
 
         return "query_mandate";
