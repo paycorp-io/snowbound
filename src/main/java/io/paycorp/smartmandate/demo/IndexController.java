@@ -1,11 +1,11 @@
 package io.paycorp.smartmandate.demo;
 
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.Base64;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -33,13 +33,19 @@ public class IndexController {
     @Value("${paycorp.encryption.key}")
     private String encryptionKey;
 
-    @GetMapping("/")
-    public String index() {
+    @GetMapping
+    public String index(Model model) {
+        return home(model);
+    }
+
+    
+    @GetMapping("/login")
+    public String signIn() {
         return "sign-in";
     }
 
     @GetMapping("/home")
-    public String index(Model model) {
+    public String home(Model model) {
         Map<String, String> accountTypeMap = Mandate.Nach.accountTypeMap();
         Map<String, String> frqcyMap = Mandate.Nach.frqcyMap();
 
@@ -67,12 +73,12 @@ public class IndexController {
         model.addAttribute("apiKey", apiKey);
 
         ApiClient apiClient = new ApiClient(url, apiKey, encryptionKey);
-        var apiResponse = apiClient.findBySourceReference(referenceNumber);
-        if(apiResponse.isSuccess()) {
+        var apiResponse = apiClient.findBySourceReference(UUID.randomUUID().toString(), referenceNumber);
+        if (apiResponse.isSuccess()) {
             model.addAttribute("response", apiResponse.message());
         } else {
             model.addAttribute("response", apiResponse.toString());
-        } 
+        }
 
         return "query_mandate";
     }
