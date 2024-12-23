@@ -11,16 +11,25 @@
   <div layout:fragment="page-content-fragment" class="flex-grow-1 p-3">
     <h2>Generate Random AES Key</h2>
     <hr class="my-4">
-    <p>Random AES Key: <strong id="aesKey" th:text="${key}"></strong>
-      <button id="copyAesKeyToClipboard" style="border: none; background: none; cursor: pointer;">
-        <svg id="copyIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+    <p>Random API Key / Client Id: <strong id="apiKey" th:text="${apiKey}"></strong>
+      <button id="copyApiKeyToClipboard" style="border: none; background: none; cursor: pointer;">
+        <svg id="copyIconApi" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
           class="bi bi-copy" viewBox="0 0 16 16">
           <path fill-rule="evenodd"
             d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" />
         </svg>
       </button>
     </p>
-    <p><a th:href="@{/createKey}">Refresh</a> to generate a new key</p>
+    <p>Random Encryption Key: <strong id="aesKey" th:text="${aesKey}"></strong>
+      <button id="copyAesKeyToClipboard" style="border: none; background: none; cursor: pointer;">
+        <svg id="copyIconAes" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+          class="bi bi-copy" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" />
+        </svg>
+      </button>
+    </p>
+    <p><a th:href="@{/createKey}">Refresh</a> to re-generate keys</p>
   </div>
   <th:block layout:fragment="page-scripts-fragment">
     <script type="text/javascript" th:src="@{/js/create_key.js}"></script>

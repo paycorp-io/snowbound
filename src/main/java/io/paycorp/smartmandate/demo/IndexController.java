@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import io.paycorp.smartmandate.client.ApiClient;
 import io.paycorp.smartmandate.client.Client;
 import io.paycorp.smartmandate.client.domain.Mandate;
+import io.paycorp.smartmandate.client.service.HelperUtility;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Slf4j
 @Controller
@@ -38,7 +40,6 @@ public class IndexController {
         return home(model);
     }
 
-    
     @GetMapping("/login")
     public String signIn() {
         return "sign-in";
@@ -52,6 +53,34 @@ public class IndexController {
         model.addAttribute("accountTypeMap", accountTypeMap);
         model.addAttribute("frqcyMap", frqcyMap);
         return "home";
+    }
+
+    @GetMapping("/encrypt")
+    public String getEncrypt(Model model) {
+        return "encrypt";
+    }
+
+    @PostMapping("/encrypt")
+    public String postEncrypt(@RequestParam String encryptionAction, @RequestParam String request,
+            @RequestParam String encryptionKey, Model model) {
+        log.info("Encryption Action: " + encryptionAction);
+        log.info("Request: " + request);
+        log.info("Encryption Key: " + encryptionKey);
+
+        model.addAttribute("encryptionAction", encryptionAction);
+        model.addAttribute("request", request);
+        model.addAttribute("encryptionKey", encryptionKey);
+
+
+        if("Encrypt".equals(encryptionAction)) {
+            var encrypted = HelperUtility.encrypt(encryptionKey, request);
+            model.addAttribute("response", encrypted.orElse("Failed to encrypt"));
+        } else {
+            var decrypted = HelperUtility.decrypt(encryptionKey, request);
+            model.addAttribute("response", decrypted.orElse("Failed to decrypt"));
+        }
+
+        return "encrypt";
     }
 
     @GetMapping("/queryMandate")
@@ -87,7 +116,8 @@ public class IndexController {
     public String createRandomAesKey(Model model) {
         byte[] key = new byte[32];
         random.nextBytes(key);
-        model.addAttribute("key", Base64.getEncoder().encodeToString(key));
+        model.addAttribute("aesKey", Base64.getEncoder().encodeToString(key));
+        model.addAttribute("apiKey", UUID.randomUUID().toString());
         return "create_key";
     }
 
