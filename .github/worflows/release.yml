@@ -1,0 +1,23 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., 17.0.3)'
+        required: true
+      build:
+        description: 'Build number (e.g., 17.0.3-SNAPSHOT)'
+        required: true
+env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+    USER_NAME: ${{ secrets.GHA_USER }}
+    ACCESS_TOKEN: ${{ secrets.GHA_PASS }}
+    JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR }}
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+jobs:
+  call-shared-release:
+    uses: paycorp-io/repo-template/.github/workflows/release-with-parameters-17.yml@main
+    with:
+      parent-folder-path: parent
+      sonar-project-key: paycorp-io_http-components
+    secrets: inherit

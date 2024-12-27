@@ -1,0 +1,22 @@
+name: Build
+env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+    USER_NAME: ${{ secrets.GHA_USER }}
+    ACCESS_TOKEN: ${{ secrets.GHA_PASS }}
+    JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR }}
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/**'
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  call-shared-build:
+    uses: paycorp-io/repo-template/.github/workflows/reusable-build.yml@main
+    with:
+      parent-folder-path: parent
+      sonar-project-key: paycorp-io_http-components
+    secrets: inherit

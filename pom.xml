@@ -6,29 +6,21 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.0</version>
+		<version>3.4.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.paycorp.smartmandate</groupId>
-	<artifactId>demo-web-sdk</artifactId>
+	<artifactId>snowbound</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Demo client applications for Mandate client sdks</name>
 	<description>Demo client applications for Mandate client sdks</description>
-	<url />
-	<licenses>
-		<license />
-	</licenses>
-	<developers>
-		<developer />
-	</developers>
 	<scm>
-		<connection />
-		<developerConnection />
-		<tag />
-		<url />
-	</scm>
+		<developerConnection>scm:git:https://github.com/paycorp-io/snowbound.git</developerConnection>
+		<connection>scm:git:https://github.com/paycorp-io/snowbound.git</connection>
+		<url>scm:git:https://github.com/paycorp-io/snowbound.git</url>
+	</scm>	
 	<properties>
-		<java.version>17</java.version>
+		<java.version>21</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -68,6 +60,16 @@
 			<version>2024.23.14-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/paycorp-io/snowbound</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<plugins>
