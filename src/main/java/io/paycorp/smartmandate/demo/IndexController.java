@@ -20,7 +20,6 @@ import io.paycorp.smartmandate.client.Client;
 import io.paycorp.smartmandate.client.domain.Mandate;
 import io.paycorp.smartmandate.client.service.HelperUtility;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Slf4j
 @Controller
@@ -37,7 +36,7 @@ public class IndexController {
 
     @GetMapping
     public String index(Model model) {
-        return home(model);
+        return "index";
     }
 
     @GetMapping("/login")

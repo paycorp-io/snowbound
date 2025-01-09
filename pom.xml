@@ -18,7 +18,7 @@
 		<developerConnection>scm:git:https://github.com/paycorp-io/snowbound.git</developerConnection>
 		<connection>scm:git:https://github.com/paycorp-io/snowbound.git</connection>
 		<url>scm:git:https://github.com/paycorp-io/snowbound.git</url>
-	</scm>	
+	</scm>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>io.paycorp.smartmandate</groupId>
 			<artifactId>paycorp-client-java</artifactId>
-			<version>2024.23.14-SNAPSHOT</version>
+			<version>2024.24.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<distributionManagement>
