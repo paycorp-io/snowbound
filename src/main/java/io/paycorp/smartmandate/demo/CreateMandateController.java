@@ -65,6 +65,7 @@ public class CreateMandateController {
 
         Mandate mandate = new Mandate.Builder()
                 .utilityCode(utilityCode)
+                .schmNm("demo")
                 .consRefNo(consumerRefNumber)
                 .sourceReferenceNumber(referenceNumber)
                 .colltnAmt(new BigDecimal(amount))
