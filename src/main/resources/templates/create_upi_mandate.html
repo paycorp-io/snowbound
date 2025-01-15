@@ -12,6 +12,18 @@
     <h2>Create UPI Mandate</h2>
     <hr class="my-4">
     <form th:action="@{/create/upiMandate}" method="post" class="row g-3">
+      <div class="col-md-4">
+        <label for="url" class="form-label">URL:</label>
+        <input type="text" id="url" name="url" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label for="apiKey" class="form-label">API Key:</label>
+        <input type="text" id="apiKey" name="apiKey" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label for="encryptionKey" class="form-label">Encryption Key:</label>
+        <input type="text" id="encryptionKey" name="encryptionKey" class="form-control" required>
+      </div>
       <div class="col-md-6">
         <label for="consumerRefNumber" class="form-label">Loan Number:</label>
         <input type="text" id="consumerRefNumber" name="consumerRefNumber" class="form-control" required>
@@ -57,11 +69,25 @@
         </select>
       </div>
       <div class="col-md-6">
-        <label for="bnkId" class="form-label">Bank:</label>
-        <input type="text" id="bnkId" name="bnkId" class="form-control" required>
+        <label for="accountValidation" class="form-label">Account Validation:</label>
+        <select id="accountValidation" name="accountValidation" class="form-control" required>
+          <option th:each="entry : ${accountValidationMap}" th:value="${entry.key}" th:text="${entry.value}">True</option>
+        </select>
       </div>
-      <div class="col-12">
-        <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="col-md-6">
+        <label for="debitRule" class="form-label">Debit Rule:</label>
+        <select id="debitRule" name="debitRule" class="form-control" required>
+          <option th:each="entry : ${debitRuleMap}" th:value="${entry.key}" th:text="${entry.value}"></option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="debitDay" class="form-label">Debit Day:</label>
+        <select id="debitDay" name="debitDay" class="form-control" required>
+          <option th:each="day : ${#numbers.sequence(1, 31)}" th:value="${day}" th:text="${day}"></option>
+        </select>
+      </div>
+      <div class="col-md-6">
+          <button type="submit" class="btn btn-primary">Submit</button>
       </div>
       <div class="form-group">
         <label for="response">Response: </label>

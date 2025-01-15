@@ -23,7 +23,7 @@ public class CreateMandateController {
 
     @GetMapping("/nachMandate")
     public String getNachMandate(Model model) {
-        Map<String, String> accountTypeMap = Mandate.Nach.accountTypeMap();
+        Map<String, String> accountTypeMap = Mandate.accountTypeMap();
         Map<String, String> frqcyMap = Mandate.Nach.frqcyMap();
         Map<String, String> authModeMap = Mandate.Nach.authModeMap();
 
@@ -63,7 +63,7 @@ public class CreateMandateController {
         log.info("Debtor Account Type: " + dbtrAccTp);
         log.info("Bank ID: " + bnkId);
 
-        Mandate mandate = new Mandate.Builder()
+        Mandate mandate = new Mandate.Nach.NachBuilder()
                 .utilityCode(utilityCode)
                 .schmNm("demo")
                 .consRefNo(consumerRefNumber)
@@ -75,7 +75,7 @@ public class CreateMandateController {
                 .dbtrNm(dbtrNm)
                 .mobile(mobile)
                 .dbtrAccNo(dbtrAccNo)
-                .dbtrAccTp(Mandate.Nach.AccountType.valueOf(dbtrAccTp))
+                .dbtrAccTp(Mandate.AccountType.valueOf(dbtrAccTp))
                 .authMode(Mandate.Nach.AuthMode.valueOf(authMode))
                 .bnkId(bnkId)
                 .build();
@@ -91,8 +91,72 @@ public class CreateMandateController {
     }
 
     @GetMapping("/upiMandate")
-    public String getUpiMandate() {
+    public String getUpiMandate(Model model) {
+        Map<String, String> accountTypeMap = Mandate.accountTypeMap();
+        Map<String, String> frqcyMap = Mandate.Upi.frqcyMap();
+        Map<String, String> accountValidationMap = Mandate.Upi.accountValidationMap();
+        Map<String, String> debitRuleMap = Mandate.Upi.debitRuleMap();
+
+        model.addAttribute("accountTypeMap", accountTypeMap);
+        model.addAttribute("frqcyMap", frqcyMap);
+        model.addAttribute("accountValidationMap", accountValidationMap);
+        model.addAttribute("debitRuleMap", debitRuleMap);
         return "create_upi_mandate";
     }
 
+    @PostMapping("/upiMandate")
+    public String postUpiMandate(Model model,
+            @RequestParam String url,
+            @RequestParam String apiKey,
+            @RequestParam String encryptionKey,
+            @RequestParam String consumerRefNumber,
+            @RequestParam String referenceNumber,
+            @RequestParam double amount,
+            @RequestParam String frqcy,
+            @RequestParam String firstCollectionDate,
+            @RequestParam String finalCollectionDate,
+            @RequestParam String dbtrNm,
+            @RequestParam String mobile,
+            @RequestParam String dbtrAccNo,
+            @RequestParam String dbtrAccTp,
+            @RequestParam String accountValidation,
+            @RequestParam String debitRule,
+            @RequestParam int debitDay) {
+        log.info("Consumer Reference Number: " + consumerRefNumber);
+        log.info("Reference Number: " + referenceNumber);
+        log.info("Amount: " + amount);
+        log.info("Frequency: " + frqcy);
+        log.info("First Collection Date: " + firstCollectionDate);
+        log.info("Final Collection Date: " + finalCollectionDate);
+        log.info("Debtor Name: " + dbtrNm);
+        log.info("Mobile: " + mobile);
+        log.info("Debtor Account Number: " + dbtrAccNo);
+        log.info("Debtor Account Type: " + dbtrAccTp);
+
+        Mandate mandate = new Mandate.Upi.UpiBuilder()
+                .schmNm("demo")
+                .consRefNo(consumerRefNumber)
+                .sourceReferenceNumber(referenceNumber)
+                .colltnAmt(new BigDecimal(amount))
+                .frqcy(Mandate.Upi.Frqcy.valueOf(frqcy))
+                .frstColltnDt(LocalDate.parse(firstCollectionDate))
+                .fnlColltnDt(LocalDate.parse(finalCollectionDate))
+                .dbtrNm(dbtrNm)
+                .mobile(mobile)
+                .dbtrAccNo(dbtrAccNo)
+                .dbtrAccTp(Mandate.AccountType.valueOf(dbtrAccTp))
+                .accountValidation(Mandate.Upi.AccountValidation.valueOf(accountValidation))
+                .debitRule(Mandate.Upi.DebitRule.valueOf(debitRule))
+                .debitDay(debitDay)
+                .build();
+
+        ApiClient apiClient = new ApiClient(url, apiKey, encryptionKey);
+        var apiResponse = apiClient.create(UUID.randomUUID().toString(), mandate);
+        if (apiResponse.isSuccess()) {
+            model.addAttribute("response", apiResponse.message());
+        } else {
+            model.addAttribute("response", apiResponse.toString());
+        }
+        return "create_upi_mandate";
+    }
 }

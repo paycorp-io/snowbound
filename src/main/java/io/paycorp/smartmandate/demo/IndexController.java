@@ -46,7 +46,7 @@ public class IndexController {
 
     @GetMapping("/home")
     public String home(Model model) {
-        Map<String, String> accountTypeMap = Mandate.Nach.accountTypeMap();
+        Map<String, String> accountTypeMap = Mandate.accountTypeMap();
         Map<String, String> frqcyMap = Mandate.Nach.frqcyMap();
 
         model.addAttribute("accountTypeMap", accountTypeMap);
@@ -146,7 +146,7 @@ public class IndexController {
         log.info("Debtor Account Type: " + dbtrAccTp);
         log.info("Bank ID: " + bnkId);
 
-        Mandate mandate = new Mandate.Builder()
+        Mandate mandate = new Mandate.Nach.NachBuilder()
                 .utilityCode("NACH0000MUTHPLBARB")
                 .schmNm("Vehicle")
                 .consRefNo(consumerRefNumber)
@@ -158,7 +158,7 @@ public class IndexController {
                 .dbtrNm(dbtrNm)
                 .mobile(mobile)
                 .dbtrAccNo(dbtrAccNo)
-                .dbtrAccTp(Mandate.Nach.AccountType.valueOf(dbtrAccTp))
+                .dbtrAccTp(Mandate.AccountType.valueOf(dbtrAccTp))
                 .bnkId(bnkId)
                 .build();
 
