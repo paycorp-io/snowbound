@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import io.paycorp.smartmandate.client.ApiClient;
-import io.paycorp.smartmandate.client.domain.Mandate;
 import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/create")
@@ -23,9 +22,9 @@ public class CreateMandateController {
 
     @GetMapping("/nachMandate")
     public String getNachMandate(Model model) {
-        Map<String, String> accountTypeMap = Mandate.accountTypeMap();
-        Map<String, String> frqcyMap = Mandate.Nach.frqcyMap();
-        Map<String, String> authModeMap = Mandate.Nach.authModeMap();
+        Map<String, String> accountTypeMap = io.paycorp.smartmandate.client.domain.nach.Mandate.accountTypeMap();
+        Map<String, String> frqcyMap = io.paycorp.smartmandate.client.domain.nach.Mandate.frqcyMap();
+        Map<String, String> authModeMap = io.paycorp.smartmandate.client.domain.nach.Mandate.authModeMap();
 
         model.addAttribute("accountTypeMap", accountTypeMap);
         model.addAttribute("frqcyMap", frqcyMap);
@@ -63,20 +62,20 @@ public class CreateMandateController {
         log.info("Debtor Account Type: " + dbtrAccTp);
         log.info("Bank ID: " + bnkId);
 
-        Mandate mandate = new Mandate.Nach.NachBuilder()
+        io.paycorp.smartmandate.client.domain.nach.Mandate mandate = new io.paycorp.smartmandate.client.domain.nach.Mandate.Builder()
                 .utilityCode(utilityCode)
                 .schmNm("demo")
                 .consRefNo(consumerRefNumber)
                 .sourceReferenceNumber(referenceNumber)
                 .colltnAmt(new BigDecimal(amount))
-                .frqcy(Mandate.Nach.Frqcy.valueOf(frqcy))
+                .frqcy(io.paycorp.smartmandate.client.domain.nach.Mandate.Frqcy.valueOf(frqcy))
                 .frstColltnDt(LocalDate.parse(firstCollectionDate))
                 .fnlColltnDt(LocalDate.parse(finalCollectionDate))
                 .dbtrNm(dbtrNm)
                 .mobile(mobile)
                 .dbtrAccNo(dbtrAccNo)
-                .dbtrAccTp(Mandate.AccountType.valueOf(dbtrAccTp))
-                .authMode(Mandate.Nach.AuthMode.valueOf(authMode))
+                .dbtrAccTp(io.paycorp.smartmandate.client.domain.nach.Mandate.AccountType.valueOf(dbtrAccTp))
+                .authMode(io.paycorp.smartmandate.client.domain.nach.Mandate.AuthMode.valueOf(authMode))
                 .bnkId(bnkId)
                 .build();
 
@@ -92,12 +91,10 @@ public class CreateMandateController {
 
     @GetMapping("/upiMandate")
     public String getUpiMandate(Model model) {
-        Map<String, String> accountTypeMap = Mandate.accountTypeMap();
-        Map<String, String> frqcyMap = Mandate.Upi.frqcyMap();
-        Map<String, String> accountValidationMap = Mandate.Upi.accountValidationMap();
-        Map<String, String> debitRuleMap = Mandate.Upi.debitRuleMap();
+        Map<String, String> frqcyMap = io.paycorp.smartmandate.client.domain.upi.Mandate.frqcyMap();
+        Map<String, String> accountValidationMap = io.paycorp.smartmandate.client.domain.upi.Mandate.accountValidationMap();
+        Map<String, String> debitRuleMap = io.paycorp.smartmandate.client.domain.upi.Mandate.debitRuleMap();
 
-        model.addAttribute("accountTypeMap", accountTypeMap);
         model.addAttribute("frqcyMap", frqcyMap);
         model.addAttribute("accountValidationMap", accountValidationMap);
         model.addAttribute("debitRuleMap", debitRuleMap);
@@ -110,6 +107,7 @@ public class CreateMandateController {
             @RequestParam String apiKey,
             @RequestParam String encryptionKey,
             @RequestParam String consumerRefNumber,
+            @RequestParam String utilityCode,
             @RequestParam String referenceNumber,
             @RequestParam double amount,
             @RequestParam String frqcy,
@@ -117,8 +115,7 @@ public class CreateMandateController {
             @RequestParam String finalCollectionDate,
             @RequestParam String dbtrNm,
             @RequestParam String mobile,
-            @RequestParam String dbtrAccNo,
-            @RequestParam String dbtrAccTp,
+            @RequestParam String virtualAddress,
             @RequestParam String accountValidation,
             @RequestParam String debitRule,
             @RequestParam int debitDay) {
@@ -130,23 +127,24 @@ public class CreateMandateController {
         log.info("Final Collection Date: " + finalCollectionDate);
         log.info("Debtor Name: " + dbtrNm);
         log.info("Mobile: " + mobile);
-        log.info("Debtor Account Number: " + dbtrAccNo);
-        log.info("Debtor Account Type: " + dbtrAccTp);
+        log.info("Debtor Account Number: " + virtualAddress);
+        log.info("UtilityCode: ", utilityCode);
 
-        Mandate mandate = new Mandate.Upi.UpiBuilder()
+        io.paycorp.smartmandate.client.domain.upi.Mandate mandate = new io.paycorp.smartmandate.client.domain.upi.Mandate.Builder()
                 .schmNm("demo")
                 .consRefNo(consumerRefNumber)
                 .sourceReferenceNumber(referenceNumber)
                 .colltnAmt(new BigDecimal(amount))
-                .frqcy(Mandate.Upi.Frqcy.valueOf(frqcy))
+                .frqcy(io.paycorp.smartmandate.client.domain.upi.Mandate.Frqcy.valueOf(frqcy))
                 .frstColltnDt(LocalDate.parse(firstCollectionDate))
                 .fnlColltnDt(LocalDate.parse(finalCollectionDate))
                 .dbtrNm(dbtrNm)
+                .amountTp(io.paycorp.smartmandate.client.domain.upi.Mandate.AmountTp.valueOf("MAX"))
                 .mobile(mobile)
-                .dbtrAccNo(dbtrAccNo)
-                .dbtrAccTp(Mandate.AccountType.valueOf(dbtrAccTp))
-                .accountValidation(Mandate.Upi.AccountValidation.valueOf(accountValidation))
-                .debitRule(Mandate.Upi.DebitRule.valueOf(debitRule))
+                .virtualAddress(virtualAddress)
+                .utilityCode("NACH0000000001")
+                .accountValidation(io.paycorp.smartmandate.client.domain.upi.Mandate.AccountValidation.valueOf(accountValidation))
+                .debitRule(io.paycorp.smartmandate.client.domain.upi.Mandate.DebitRule.valueOf(debitRule))
                 .debitDay(debitDay)
                 .build();
 

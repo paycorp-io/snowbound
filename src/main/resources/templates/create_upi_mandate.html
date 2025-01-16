@@ -29,6 +29,10 @@
         <input type="text" id="consumerRefNumber" name="consumerRefNumber" class="form-control" required>
       </div>
       <div class="col-md-6">
+        <label for="utilityCode" class="form-label">UtilityCode:</label>
+        <input type="text" id="utilityCode" name="utilityCode" class="form-control" required>
+      </div>
+      <div class="col-md-6">
         <label for="referenceNumber" class="form-label">Request Number:</label>
         <input type="text" id="referenceNumber" name="referenceNumber" class="form-control" required>
       </div>
@@ -59,14 +63,8 @@
         <input type="text" id="mobile" name="mobile" class="form-control" required>
       </div>
       <div class="col-md-6">
-        <label for="dbtrAccNo" class="form-label">Account Number:</label>
-        <input type="text" id="dbtrAccNo" name="dbtrAccNo" class="form-control" required>
-      </div>
-      <div class="col-md-6">
-        <label for="dbtrAccTp" class="form-label">Account Type:</label>
-        <select id="dbtrAccTp" name="dbtrAccTp" class="form-control" required>
-          <option th:each="entry : ${accountTypeMap}" th:value="${entry.key}" th:text="${entry.value}"></option>
-        </select>
+        <label for="virtualAddress" class="form-label">Virtual Account Number:</label>
+        <input type="text" id="dbtvirtualAddress" name="virtualAddress" class="form-control" required>
       </div>
       <div class="col-md-6">
         <label for="accountValidation" class="form-label">Account Validation:</label>
