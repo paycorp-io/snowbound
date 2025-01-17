@@ -84,12 +84,12 @@
           <option th:each="entry : ${accountValidationMap}" th:value="${entry.key}" th:text="${entry.value}">True</option>
         </select>
       </div>
-      <div class="col-md-4">
+      <!--<div class="col-md-4">
         <label for="revokeable" class="form-label">Revokeable:</label>
         <select id="revokeable" name="revokeable" class="form-control" required>
           <option th:each="entry : ${revokeableMap}" th:value="${entry.key}" th:text="${entry.value}">True</option>
         </select>
-      </div>
+      </div>-->
       <div class="col-md-4">
         <label for="debitRule" class="form-label">Debit Rule:</label>
         <select id="debitRule" name="debitRule" class="form-control" required>

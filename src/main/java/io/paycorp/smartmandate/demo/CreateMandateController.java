@@ -101,14 +101,14 @@ public class CreateMandateController {
         Map<String, String> debitRuleMap = Mandate.Upi.debitRuleMap();
         Map<String, String> categoryCodeMap = Mandate.Upi.categoryCodeMap();
         Map<String, String> amountTpMap = Mandate.Upi.amountTpMap();
-        Map<String, String> revokeableMap = Mandate.Upi.revokeableMap();
+        // Map<String, String> revokeableMap = Mandate.Upi.revokeableMap();
 
         model.addAttribute("frqcyMap", frqcyMap);
         model.addAttribute("accountValidationMap", accountValidationMap);
         model.addAttribute("debitRuleMap", debitRuleMap);
         model.addAttribute("categoryCodeMap", categoryCodeMap);
         model.addAttribute("amountTpMap", amountTpMap);
-        model.addAttribute("revokeableMap", revokeableMap);
+        // model.addAttribute("revokeableMap", revokeableMap);
         return "create_upi_mandate";
     }
 
@@ -130,7 +130,7 @@ public class CreateMandateController {
             @RequestParam String mobile,
             @RequestParam String virtualAddress,
             @RequestParam String accountValidation,
-            @RequestParam String revokeable,
+            // @RequestParam String revokeable,
             @RequestParam String debitRule,
             @RequestParam int debitDay) {
         log.info("Consumer Reference Number: " + consumerRefNumber);
@@ -162,7 +162,8 @@ public class CreateMandateController {
                 .accountValidation(Mandate.Upi.AccountValidation.valueOf(accountValidation))
                 .debitRule(Mandate.Upi.DebitRule.valueOf(debitRule))
                 .debitDay(debitDay)
-                .revokeable(Mandate.Upi.Revokeable.valueOf(revokeable))
+                // .revokeable(Mandate.Upi.Revokeable.valueOf(revokeable))
+                .revokeable("N")
                 .build();
                 log.info("CategoryCode: " + io.paycorp.smartmandate.client.domain.upi.Mandate.CategoryCode.valueOf(categoryCode));
 
