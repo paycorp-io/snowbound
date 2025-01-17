@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import io.paycorp.smartmandate.client.ApiClient;
 import io.paycorp.smartmandate.client.Client;
-import io.paycorp.smartmandate.client.domain.nach.Mandate;
+import io.paycorp.smartmandate.client.domain.Mandate;
 import io.paycorp.smartmandate.client.service.HelperUtility;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,8 +46,8 @@ public class IndexController {
 
     @GetMapping("/home")
     public String home(Model model) {
-        Map<String, String> accountTypeMap = Mandate.accountTypeMap();
-        Map<String, String> frqcyMap = Mandate.frqcyMap();
+        Map<String, String> accountTypeMap = Mandate.Nach.accountTypeMap();
+        Map<String, String> frqcyMap = Mandate.Nach.frqcyMap();
 
         model.addAttribute("accountTypeMap", accountTypeMap);
         model.addAttribute("frqcyMap", frqcyMap);
@@ -146,19 +146,19 @@ public class IndexController {
         log.info("Debtor Account Type: " + dbtrAccTp);
         log.info("Bank ID: " + bnkId);
 
-        Mandate mandate = new Mandate.Builder()
+        Mandate mandate = new Mandate.Nach.Builder()
                 .utilityCode("NACH0000MUTHPLBARB")
                 .schmNm("Vehicle")
                 .consRefNo(consumerRefNumber)
                 .sourceReferenceNumber(referenceNumber)
                 .colltnAmt(new BigDecimal(amount))
-                .frqcy(Mandate.Frqcy.valueOf(frqcy))
-                .frstColltnDt(LocalDate.parse(firstCollectionDate))
-                .fnlColltnDt(LocalDate.parse(finalCollectionDate))
+                .frqcy(Mandate.Nach.Frqcy.valueOf(frqcy))
+                .frstColltnDt(firstCollectionDate)
+                .fnlColltnDt(finalCollectionDate)
                 .dbtrNm(dbtrNm)
                 .mobile(mobile)
                 .dbtrAccNo(dbtrAccNo)
-                .dbtrAccTp(Mandate.AccountType.valueOf(dbtrAccTp))
+                .dbtrAccTp(Mandate.Nach.AccountType.valueOf(dbtrAccTp))
                 .bnkId(bnkId)
                 .build();
 
