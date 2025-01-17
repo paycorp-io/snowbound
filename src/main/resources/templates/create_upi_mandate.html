@@ -24,73 +24,79 @@
         <label for="encryptionKey" class="form-label">Encryption Key:</label>
         <input type="text" id="encryptionKey" name="encryptionKey" class="form-control" required>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="consumerRefNumber" class="form-label">Loan Number:</label>
         <input type="text" id="consumerRefNumber" name="consumerRefNumber" class="form-control" required>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="utilityCode" class="form-label">UtilityCode:</label>
         <input type="text" id="utilityCode" name="utilityCode" class="form-control" required>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="categoryCode" class="form-label">Catagory Code:</label>
         <select id="categoryCode" name="categoryCode" class="form-control" required>
           <option th:each="entry : ${categoryCodeMap}" th:value="${entry.key}" th:text="${entry.key}"></option>
         </select>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="referenceNumber" class="form-label">Request Number:</label>
         <input type="text" id="referenceNumber" name="referenceNumber" class="form-control" required>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="amount" class="form-label">Amount:</label>
         <input type="number" id="amount" name="amount" class="form-control" required>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
+        <label for="amountTp" class="form-label">Amount Type:</label>
+        <select id="amountTp" name="amountTp" class="form-control" required>
+          <option th:each="entry : ${amountTpMap}" th:value="${entry.key}" th:text="${entry.value}"></option>
+        </select>
+      </div>
+      <div class="col-md-4">
         <label for="frqcy" class="form-label">Frequency:</label>
         <select id="frqcy" name="frqcy" class="form-control" required>
           <option th:each="entry : ${frqcyMap}" th:value="${entry.key}" th:text="${entry.value}"></option>
         </select>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="firstCollectionDate" class="form-label">First Collection Date:</label>
         <input type="date" id="firstCollectionDate" name="firstCollectionDate" class="form-control" required>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="finalCollectionDate" class="form-label">Final Collection Date:</label>
         <input type="date" id="finalCollectionDate" name="finalCollectionDate" class="form-control" required>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="dbtrNm" class="form-label">Name:</label>
         <input type="text" id="dbtrNm" name="dbtrNm" class="form-control" required>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="mobile" class="form-label">Mobile:</label>
         <input type="text" id="mobile" name="mobile" class="form-control" required>
       </div>
-      <div class="col-md-6">
-        <label for="virtualAddress" class="form-label">Virtual Account Number:</label>
+      <div class="col-md-4">
+        <label for="virtualAddress" class="form-label">Virtual Address:</label>
         <input type="text" id="dbtvirtualAddress" name="virtualAddress" class="form-control" required>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="accountValidation" class="form-label">Account Validation:</label>
         <select id="accountValidation" name="accountValidation" class="form-control" required>
           <option th:each="entry : ${accountValidationMap}" th:value="${entry.key}" th:text="${entry.value}">True</option>
         </select>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="debitRule" class="form-label">Debit Rule:</label>
         <select id="debitRule" name="debitRule" class="form-control" required>
           <option th:each="entry : ${debitRuleMap}" th:value="${entry.key}" th:text="${entry.value}"></option>
         </select>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="debitDay" class="form-label">Debit Day:</label>
         <select id="debitDay" name="debitDay" class="form-control" required>
           <option th:each="day : ${#numbers.sequence(1, 31)}" th:value="${day}" th:text="${day}"></option>
         </select>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
           <button type="submit" class="btn btn-primary">Submit</button>
       </div>
       <div class="form-group">

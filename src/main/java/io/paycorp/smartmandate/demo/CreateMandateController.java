@@ -25,10 +25,12 @@ public class CreateMandateController {
         Map<String, String> accountTypeMap = io.paycorp.smartmandate.client.domain.nach.Mandate.accountTypeMap();
         Map<String, String> frqcyMap = io.paycorp.smartmandate.client.domain.nach.Mandate.frqcyMap();
         Map<String, String> authModeMap = io.paycorp.smartmandate.client.domain.nach.Mandate.authModeMap();
+        Map<String, String> amountTpMap = io.paycorp.smartmandate.client.domain.nach.Mandate.amountTpMap();
 
         model.addAttribute("accountTypeMap", accountTypeMap);
         model.addAttribute("frqcyMap", frqcyMap);
         model.addAttribute("authModeMap", authModeMap);
+        model.addAttribute("amountTpMap", amountTpMap);
         return "create_nach_mandate";
     }
 
@@ -41,6 +43,7 @@ public class CreateMandateController {
             @RequestParam String consumerRefNumber,
             @RequestParam String referenceNumber,
             @RequestParam double amount,
+            @RequestParam String amountTp,
             @RequestParam String frqcy,
             @RequestParam String firstCollectionDate,
             @RequestParam String finalCollectionDate,
@@ -68,6 +71,7 @@ public class CreateMandateController {
                 .consRefNo(consumerRefNumber)
                 .sourceReferenceNumber(referenceNumber)
                 .colltnAmt(new BigDecimal(amount))
+                .amountTp(io.paycorp.smartmandate.client.domain.nach.Mandate.AmountTp.valueOf(amountTp))
                 .frqcy(io.paycorp.smartmandate.client.domain.nach.Mandate.Frqcy.valueOf(frqcy))
                 .frstColltnDt(LocalDate.parse(firstCollectionDate))
                 .fnlColltnDt(LocalDate.parse(finalCollectionDate))
@@ -95,11 +99,13 @@ public class CreateMandateController {
         Map<String, String> accountValidationMap = io.paycorp.smartmandate.client.domain.upi.Mandate.accountValidationMap();
         Map<String, String> debitRuleMap = io.paycorp.smartmandate.client.domain.upi.Mandate.debitRuleMap();
         Map<String, String> categoryCodeMap = io.paycorp.smartmandate.client.domain.upi.Mandate.categoryCodeMap();
+        Map<String, String> amountTpMap = io.paycorp.smartmandate.client.domain.upi.Mandate.amountTpMap();
 
         model.addAttribute("frqcyMap", frqcyMap);
         model.addAttribute("accountValidationMap", accountValidationMap);
         model.addAttribute("debitRuleMap", debitRuleMap);
         model.addAttribute("categoryCodeMap", categoryCodeMap);
+        model.addAttribute("amountTpMap", amountTpMap);
         return "create_upi_mandate";
     }
 
@@ -113,6 +119,7 @@ public class CreateMandateController {
             @RequestParam String categoryCode,
             @RequestParam String referenceNumber,
             @RequestParam double amount,
+            @RequestParam String amountTp,
             @RequestParam String frqcy,
             @RequestParam String firstCollectionDate,
             @RequestParam String finalCollectionDate,
@@ -143,7 +150,7 @@ public class CreateMandateController {
                 .frstColltnDt(LocalDate.parse(firstCollectionDate))
                 .fnlColltnDt(LocalDate.parse(finalCollectionDate))
                 .dbtrNm(dbtrNm)
-                .amountTp(io.paycorp.smartmandate.client.domain.upi.Mandate.AmountTp.valueOf("EXACT"))
+                .amountTp(io.paycorp.smartmandate.client.domain.upi.Mandate.AmountTp.valueOf(amountTp))
                 .mobile(mobile)
                 .virtualAddress(virtualAddress)
                 .utilityCode(utilityCode)
