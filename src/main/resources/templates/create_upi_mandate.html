@@ -33,6 +33,12 @@
         <input type="text" id="utilityCode" name="utilityCode" class="form-control" required>
       </div>
       <div class="col-md-6">
+        <label for="categoryCode" class="form-label">Catagory Code:</label>
+        <select id="categoryCode" name="categoryCode" class="form-control" required>
+          <option th:each="entry : ${categoryCodeMap}" th:value="${entry.key}" th:text="${entry.key}"></option>
+        </select>
+      </div>
+      <div class="col-md-6">
         <label for="referenceNumber" class="form-label">Request Number:</label>
         <input type="text" id="referenceNumber" name="referenceNumber" class="form-control" required>
       </div>

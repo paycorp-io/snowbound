@@ -94,10 +94,12 @@ public class CreateMandateController {
         Map<String, String> frqcyMap = io.paycorp.smartmandate.client.domain.upi.Mandate.frqcyMap();
         Map<String, String> accountValidationMap = io.paycorp.smartmandate.client.domain.upi.Mandate.accountValidationMap();
         Map<String, String> debitRuleMap = io.paycorp.smartmandate.client.domain.upi.Mandate.debitRuleMap();
+        Map<String, String> categoryCodeMap = io.paycorp.smartmandate.client.domain.upi.Mandate.categoryCodeMap();
 
         model.addAttribute("frqcyMap", frqcyMap);
         model.addAttribute("accountValidationMap", accountValidationMap);
         model.addAttribute("debitRuleMap", debitRuleMap);
+        model.addAttribute("categoryCodeMap", categoryCodeMap);
         return "create_upi_mandate";
     }
 
@@ -108,6 +110,7 @@ public class CreateMandateController {
             @RequestParam String encryptionKey,
             @RequestParam String consumerRefNumber,
             @RequestParam String utilityCode,
+            @RequestParam String categoryCode,
             @RequestParam String referenceNumber,
             @RequestParam double amount,
             @RequestParam String frqcy,
@@ -128,7 +131,8 @@ public class CreateMandateController {
         log.info("Debtor Name: " + dbtrNm);
         log.info("Mobile: " + mobile);
         log.info("Debtor Account Number: " + virtualAddress);
-        log.info("UtilityCode: ", utilityCode);
+        log.info("UtilityCode: " + utilityCode);
+        log.info("CategoryCode: " + categoryCode);
 
         io.paycorp.smartmandate.client.domain.upi.Mandate mandate = new io.paycorp.smartmandate.client.domain.upi.Mandate.Builder()
                 .schmNm("demo")
@@ -139,14 +143,17 @@ public class CreateMandateController {
                 .frstColltnDt(LocalDate.parse(firstCollectionDate))
                 .fnlColltnDt(LocalDate.parse(finalCollectionDate))
                 .dbtrNm(dbtrNm)
-                .amountTp(io.paycorp.smartmandate.client.domain.upi.Mandate.AmountTp.valueOf("MAX"))
+                .amountTp(io.paycorp.smartmandate.client.domain.upi.Mandate.AmountTp.valueOf("EXACT"))
                 .mobile(mobile)
                 .virtualAddress(virtualAddress)
-                .utilityCode("NACH0000000001")
+                .utilityCode(utilityCode)
+                .categoryCode(io.paycorp.smartmandate.client.domain.upi.Mandate.CategoryCode.valueOf(categoryCode))
                 .accountValidation(io.paycorp.smartmandate.client.domain.upi.Mandate.AccountValidation.valueOf(accountValidation))
                 .debitRule(io.paycorp.smartmandate.client.domain.upi.Mandate.DebitRule.valueOf(debitRule))
                 .debitDay(debitDay)
+                .revokeable("Y")
                 .build();
+                log.info("CategoryCode: " + io.paycorp.smartmandate.client.domain.upi.Mandate.CategoryCode.valueOf(categoryCode));
 
         ApiClient apiClient = new ApiClient(url, apiKey, encryptionKey);
         var apiResponse = apiClient.create(UUID.randomUUID().toString(), mandate);
