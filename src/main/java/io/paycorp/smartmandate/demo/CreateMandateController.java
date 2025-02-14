@@ -164,7 +164,7 @@ public class CreateMandateController {
                 .debitDay(debitDay)
                 .revokeable(Mandate.Upi.Revokeable.valueOf(revokeable))
                 .build();
-                log.info("CategoryCode: " + io.paycorp.smartmandate.client.domain.upi.Mandate.CategoryCode.valueOf(categoryCode));
+                //log.info("CategoryCode: " + io.paycorp.smartmandate.client.domain.upi.Mandate.CategoryCode.valueOf(categoryCode));
 
         ApiClient apiClient = new ApiClient(url, apiKey, encryptionKey);
         var apiResponse = apiClient.create(UUID.randomUUID().toString(), mandate);

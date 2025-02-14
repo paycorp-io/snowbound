@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{template-three}">
+
+<head>
+    <title>NACH Mandate Collection</title>
+</head>
+
+<body>
+    <div layout:fragment="page-content-fragment" class="flex-grow-1 p-3">
+        <h2>ONMAG Mandate Collection</h2>
+        <hr class="my-4">
+        <form th:action="@{/nachMandateCollection}" method="post" class="row g-3">
+            <div class="col-md-4">
+                <label for="url" class="form-label">URL:</label>
+                <input type="text" id="url" name="url" class="form-control" required>
+              </div>
+            <div class="col-md-4">
+                <label for="apiKey" class="form-label">API Key:</label>
+                <input type="text" id="apiKey" name="apiKey" class="form-control" required>
+              </div>
+            <div class="col-md-4">
+                <label for="encryptionKey" class="form-label">Encryption Key:</label>
+                <input type="text" id="encryptionKey" name="encryptionKey" class="form-control" required>
+            </div>
+
+            <!-- <div class="col-md-6">
+                <label for="mndtType" class="form-label">Mandate Type:</label>
+                <select id="mndtType" name="mndtType" class="form-control" required>
+                    <option value="" disabled selected>Select Mandate Type</option>
+                    <option th:each="entry : ${mandateTypeMap}" th:value="${entry.key}" th:text="${entry.value}"></option>
+                </select>
+            </div> -->
+            <div class="col-md-6">
+                <label for="orgTxnRefNo" class="form-label">ORG Txn No:</label>
+                <input type="text" id="orgTxnRefNo" name="orgTxnRefNo" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="utilityCode" class="form-label">Utility Code:</label>
+                <input type="text" id="utilityCode" name="utilityCode" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="referenceNumber" class="form-label">Reference Number:</label>
+                <input type="text" id="referenceNumber" name="referenceNumber" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="colltnAmt" class="form-label">Collection Amount:</label>
+                <input type="number" id="colltnAmt" name="colltnAmt" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="umrn" class="form-label">UMRN:</label>
+                <input type="text" id="umrn" name="umrn" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="txnDt" class="form-label">Transaction Date:</label>
+                <input type="date" id="txnDt" name="txnDt" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="recurringSeqNo" class="form-label">Recurring Sequence No:</label>
+                <input type="number" id="recurringSeqNo" class="form-control" name="recurringSeqNo">
+            </div>
+
+            <div class="col-md-6">
+                <label for="representmentStatus" class="form-label">Representment Status:</label>
+                <input type="text" id="representmentStatus" name="representmentStatus" class="form-control">
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">submit</button>
+            </div>
+
+            <div class="form-group">
+                <label for="response">Response</label>
+                <textarea class="form-control" id="response" rows="5" th:text="${response}" readonly></textarea>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

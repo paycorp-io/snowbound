@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import io.paycorp.smartmandate.client.ApiClient;
 import io.paycorp.smartmandate.client.Client;
 import io.paycorp.smartmandate.client.domain.Mandate;
+import io.paycorp.smartmandate.client.domain.Smcollection;
 import io.paycorp.smartmandate.client.service.HelperUtility;
 import lombok.extern.slf4j.Slf4j;
 
@@ -170,5 +171,103 @@ public class IndexController {
         model.addAttribute("clientId", clientId);
         return "redirect_to_gateway";
     }
+
+    @GetMapping("/nachMandateCollection")
+    public String getNachMandateCollection(Model model) {
+        // Map<String, String> mandateTypeMap = Mandate.Collection.mandateTypeMap();
+        // model.addAttribute("mandateTypeMap", mandateTypeMap);
+        return "collection_nach_mandate";
+    }
+
+    @PostMapping("/nachMandateCollection")
+    public String postNachMandateCollection(@RequestParam String utilityCode, 
+            @RequestParam String referenceNumber, @RequestParam double colltnAmt, 
+            @RequestParam String umrn, @RequestParam String txnDt, @RequestParam String url,
+            @RequestParam String apiKey, @RequestParam String encryptionKey, 
+            @RequestParam String recurringSeqNo, @RequestParam String representmentStatus,
+            @RequestParam String orgTxnRefNo, Model model) throws Exception{
+                log.info("url: " + url);
+                log.info("apiKey: " + apiKey);
+                log.info("encryptionkey: " + encryptionKey);
+                //log.info("Mandate Type: " + mndtType);
+                log.info("Utility Code: " + utilityCode);
+                log.info("Reference Number: " + referenceNumber);
+                log.info("Collection Amount: " + colltnAmt);
+                log.info("UMRN: " + umrn);
+                log.info("transactionDate: " + txnDt);
+                log.info("recurringSequenceNumber: " + recurringSeqNo);
+                log.info("representmentStatus: " + representmentStatus);
+                log.info("orgTxnRefNo: " + orgTxnRefNo);
+
+                Smcollection nachMandateCollection = new Smcollection.ONMAG.Builder()
+                .utilityCode(utilityCode)
+                .referenceNumber(referenceNumber)
+                .colltnAmt(new BigDecimal(colltnAmt))
+                .umrn(umrn)
+                .txnDt(txnDt)
+                .recurringSeqNo(recurringSeqNo)
+                .representmentStatus(representmentStatus)
+                .orgTxnRefNo(orgTxnRefNo)
+                .build();
+
+                ApiClient apiClient = new ApiClient(url, apiKey, encryptionKey);
+                var apiResponse = apiClient.collection(UUID.randomUUID().toString(), nachMandateCollection);
+                if(apiResponse.isSuccess()) {
+                    model.addAttribute("response", apiResponse.message());
+                }else{
+                    model.addAttribute("response", apiResponse.toString());
+                }
+            return "collection_nach_mandate";
+    }
+
+    @GetMapping("/upiMandateCollection")
+    public String getCollection(Model model) {
+        // Map<String, String> mandateTypeMap = Mandate.Collection.mandateTypeMap();
+        // model.addAttribute("mandateTypeMap", mandateTypeMap);
+        return "collection_upi_mandate";
+    }
+
+    @PostMapping("/upiMandateCollection")
+    public String postCollection(@RequestParam String utilityCode, 
+            @RequestParam String referenceNumber, @RequestParam double colltnAmt, 
+            @RequestParam String umrn, @RequestParam String txnDt, @RequestParam String url,
+            @RequestParam String apiKey, @RequestParam String encryptionKey, 
+            @RequestParam String recurringSeqNo, @RequestParam String representmentStatus,
+            @RequestParam String orgTxnRefNo, Model model) throws Exception{
+                log.info("url: " + url);
+                log.info("apiKey: " + apiKey);
+                log.info("encryptionkey: " + encryptionKey);
+                //log.info("Mandate Type: " + mndtType);
+                log.info("Utility Code: " + utilityCode);
+                log.info("Reference Number: " + referenceNumber);
+                log.info("Collection Amount: " + colltnAmt);
+                log.info("UMRN: " + umrn);
+                log.info("transactionDate: " + txnDt);
+                log.info("recurringSequenceNumber: " + recurringSeqNo);
+                log.info("representmentStatus: " + representmentStatus);
+                log.info("orgTxnRefNo: " + orgTxnRefNo);
+
+                Smcollection upiMandateCollection = new Smcollection.Upi.Builder()
+                .utilityCode(utilityCode)
+                .referenceNumber(referenceNumber)
+                .colltnAmt(new BigDecimal(colltnAmt))
+                .umrn(umrn)
+                .txnDt(txnDt)
+                .recurringSeqNo(recurringSeqNo)
+                .representmentStatus(representmentStatus)
+                .orgTxnRefNo(orgTxnRefNo)
+                .build();
+
+                ApiClient apiClient = new ApiClient(url, apiKey, encryptionKey);
+                var apiResponse = apiClient.collection(UUID.randomUUID().toString(), upiMandateCollection);
+                if(apiResponse.isSuccess()) {
+                    model.addAttribute("response", apiResponse.message());
+                }else{
+                    model.addAttribute("response", apiResponse.toString());
+                }
+            return "collection_upi_mandate";
+    }
+
 }
 // { "accNum": "12344555" } -> encrypt and send
+
