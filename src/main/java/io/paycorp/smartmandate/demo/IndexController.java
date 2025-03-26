@@ -151,7 +151,7 @@ public class IndexController {
                 .utilityCode("NACH0000MUTHPLBARB")
                 .schmNm("Vehicle")
                 .consRefNo(consumerRefNumber)
-                .sourceReferenceNumber(referenceNumber)
+                .sourceReference(referenceNumber)
                 .colltnAmt(new BigDecimal(amount))
                 .frqcy(Mandate.Nach.Frqcy.valueOf(frqcy))
                 .frstColltnDt(firstCollectionDate)
@@ -268,6 +268,15 @@ public class IndexController {
             return "collection_upi_mandate";
     }
 
+    // @GetMapping("/amendMandate")
+    // public String getAmendMandate(Model model) {
+    //     return "amend_mandate";
+    // }
+
+    // @PostMapping("/amdendMandate") {
+    //  public String postAmendMandate(@RequestParam String utilityCode, @RequestParam String referenceNumber,
+    //         @RequestParam String )   
+    // }
 }
 // { "accNum": "12344555" } -> encrypt and send
 
