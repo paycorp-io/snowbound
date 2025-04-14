@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import io.paycorp.smartmandate.client.ApiClient;
 import io.paycorp.smartmandate.client.Client;
 import io.paycorp.smartmandate.client.domain.Mandate;
-import io.paycorp.smartmandate.client.domain.Smcollection;
+import io.paycorp.smartmandate.client.domain.SmCollection;
 import io.paycorp.smartmandate.client.service.HelperUtility;
 import lombok.extern.slf4j.Slf4j;
 
@@ -181,33 +181,33 @@ public class IndexController {
 
     @PostMapping("/nachMandateCollection")
     public String postNachMandateCollection(@RequestParam String utilityCode, 
-            @RequestParam String referenceNumber, @RequestParam double colltnAmt, 
-            @RequestParam String umrn, @RequestParam String txnDt, @RequestParam String url,
+            @RequestParam String referenceNumber, @RequestParam double claimAmt, 
+            @RequestParam String umrn, @RequestParam String claimDate, @RequestParam String url,
             @RequestParam String apiKey, @RequestParam String encryptionKey, 
-            @RequestParam String recurringSeqNo, @RequestParam String representmentStatus,
-            @RequestParam String orgTxnRefNo, Model model) throws Exception{
+            @RequestParam String recurringSeqNo, @RequestParam String representStatus,
+            @RequestParam String orgTxnRef, Model model) throws Exception{
                 log.info("url: " + url);
                 log.info("apiKey: " + apiKey);
                 log.info("encryptionkey: " + encryptionKey);
                 //log.info("Mandate Type: " + mndtType);
                 log.info("Utility Code: " + utilityCode);
                 log.info("Reference Number: " + referenceNumber);
-                log.info("Collection Amount: " + colltnAmt);
+                log.info("Collection Amount: " + claimAmt);
                 log.info("UMRN: " + umrn);
-                log.info("transactionDate: " + txnDt);
+                log.info("transactionDate: " + claimDate);
                 log.info("recurringSequenceNumber: " + recurringSeqNo);
-                log.info("representmentStatus: " + representmentStatus);
-                log.info("orgTxnRefNo: " + orgTxnRefNo);
+                log.info("representStatus: " + representStatus);
+                log.info("orgTxnRef: " + orgTxnRef);
 
-                Smcollection nachMandateCollection = new Smcollection.ONMAG.Builder()
+                SmCollection nachMandateCollection = new SmCollection.ONMAG.Builder()
                 .utilityCode(utilityCode)
                 .referenceNumber(referenceNumber)
-                .colltnAmt(new BigDecimal(colltnAmt))
+                .claimAmt(new BigDecimal(claimAmt))
                 .umrn(umrn)
-                .txnDt(txnDt)
+                .claimDate(claimDate)
                 .recurringSeqNo(recurringSeqNo)
-                .representmentStatus(representmentStatus)
-                .orgTxnRefNo(orgTxnRefNo)
+                .representStatus(representStatus)
+                .orgTxnRef(orgTxnRef)
                 .build();
 
                 ApiClient apiClient = new ApiClient(url, apiKey, encryptionKey);
@@ -229,33 +229,33 @@ public class IndexController {
 
     @PostMapping("/upiMandateCollection")
     public String postCollection(@RequestParam String utilityCode, 
-            @RequestParam String referenceNumber, @RequestParam double colltnAmt, 
-            @RequestParam String umrn, @RequestParam String txnDt, @RequestParam String url,
+            @RequestParam String referenceNumber, @RequestParam double claimAmt, 
+            @RequestParam String umrn, @RequestParam String claimDate, @RequestParam String url,
             @RequestParam String apiKey, @RequestParam String encryptionKey, 
-            @RequestParam String recurringSeqNo, @RequestParam String representmentStatus,
-            @RequestParam String orgTxnRefNo, Model model) throws Exception{
+            @RequestParam String recurringSeqNo, @RequestParam String representStatus,
+            @RequestParam String orgTxnRef, Model model) throws Exception{
                 log.info("url: " + url);
                 log.info("apiKey: " + apiKey);
                 log.info("encryptionkey: " + encryptionKey);
                 //log.info("Mandate Type: " + mndtType);
                 log.info("Utility Code: " + utilityCode);
                 log.info("Reference Number: " + referenceNumber);
-                log.info("Collection Amount: " + colltnAmt);
+                log.info("Collection Amount: " + claimAmt);
                 log.info("UMRN: " + umrn);
-                log.info("transactionDate: " + txnDt);
+                log.info("transactionDate: " + claimDate);
                 log.info("recurringSequenceNumber: " + recurringSeqNo);
-                log.info("representmentStatus: " + representmentStatus);
-                log.info("orgTxnRefNo: " + orgTxnRefNo);
+                log.info("representStatus: " + representStatus);
+                log.info("orgTxnRef: " + orgTxnRef);
 
-                Smcollection upiMandateCollection = new Smcollection.Upi.Builder()
+                SmCollection upiMandateCollection = new SmCollection.Upi.Builder()
                 .utilityCode(utilityCode)
                 .referenceNumber(referenceNumber)
-                .colltnAmt(new BigDecimal(colltnAmt))
+                .claimAmt(new BigDecimal(claimAmt))
                 .umrn(umrn)
-                .txnDt(txnDt)
+                .claimDate(claimDate)
                 .recurringSeqNo(recurringSeqNo)
-                .representmentStatus(representmentStatus)
-                .orgTxnRefNo(orgTxnRefNo)
+                .representStatus(representStatus)
+                .orgTxnRef(orgTxnRef)
                 .build();
 
                 ApiClient apiClient = new ApiClient(url, apiKey, encryptionKey);
